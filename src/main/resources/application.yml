@@ -1,0 +1,27 @@
+spring:
+  application:
+    name: google-calendar-api-test
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/google-calendar-api
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+    security: # 스프링 시큐리티 OAuth 2.0 로그인 정보
+      oauth2:
+        client:
+          registration:
+            google: # 구글 로그링 인증 정보
+              clientId: ${GOOGLE_CLIENT_ID}           # 환경변수로부터 가져옴
+              clientSecret: ${GOOGLE_CLIENT_SECRET}   # 환경변수로부터 가져옴
+              scope:
+                - email
+                - profile
+                - https://www.googleapis.com/auth/calendar
+              redirect-uri: http://localhost:8080/login/oauth2/code/google
